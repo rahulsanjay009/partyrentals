@@ -1,15 +1,35 @@
 {
   "files": {
-    "main.css": "/static/css/main.674c8121.css",
-    "main.js": "/static/js/main.23974e82.js",
-    "static/js/453.6a5c0bc7.chunk.js": "/static/js/453.6a5c0bc7.chunk.js",
-    "index.html": "/index.html",
-    "main.674c8121.css.map": "/static/css/main.674c8121.css.map",
-    "main.23974e82.js.map": "/static/js/main.23974e82.js.map",
-    "453.6a5c0bc7.chunk.js.map": "/static/js/453.6a5c0bc7.chunk.js.map"
+    "main.css": "/partyrentals/pc_frontend/static/css/main.4cb75a4a.css",
+    "main.js": "/partyrentals/pc_frontend/static/js/main.8d150528.js",
+    "static/js/653.b6df16d2.chunk.js": "/partyrentals/pc_frontend/static/js/653.b6df16d2.chunk.js",
+    "static/js/288.d6e98be1.chunk.js": "/partyrentals/pc_frontend/static/js/288.d6e98be1.chunk.js",
+    "static/js/867.5e287c8d.chunk.js": "/partyrentals/pc_frontend/static/js/867.5e287c8d.chunk.js",
+    "static/js/923.331312bb.chunk.js": "/partyrentals/pc_frontend/static/js/923.331312bb.chunk.js",
+    "static/js/627.28f7538c.chunk.js": "/partyrentals/pc_frontend/static/js/627.28f7538c.chunk.js",
+    "static/js/938.259a1363.chunk.js": "/partyrentals/pc_frontend/static/js/938.259a1363.chunk.js",
+    "static/js/247.65c55201.chunk.js": "/partyrentals/pc_frontend/static/js/247.65c55201.chunk.js",
+    "static/js/82.a51a5601.chunk.js": "/partyrentals/pc_frontend/static/js/82.a51a5601.chunk.js",
+    "static/js/768.0622d08c.chunk.js": "/partyrentals/pc_frontend/static/js/768.0622d08c.chunk.js",
+    "static/js/834.2c48c761.chunk.js": "/partyrentals/pc_frontend/static/js/834.2c48c761.chunk.js",
+    "static/js/453.88c03b0f.chunk.js": "/partyrentals/pc_frontend/static/js/453.88c03b0f.chunk.js",
+    "index.html": "/partyrentals/pc_frontend/index.html",
+    "main.4cb75a4a.css.map": "/partyrentals/pc_frontend/static/css/main.4cb75a4a.css.map",
+    "main.8d150528.js.map": "/partyrentals/pc_frontend/static/js/main.8d150528.js.map",
+    "653.b6df16d2.chunk.js.map": "/partyrentals/pc_frontend/static/js/653.b6df16d2.chunk.js.map",
+    "288.d6e98be1.chunk.js.map": "/partyrentals/pc_frontend/static/js/288.d6e98be1.chunk.js.map",
+    "867.5e287c8d.chunk.js.map": "/partyrentals/pc_frontend/static/js/867.5e287c8d.chunk.js.map",
+    "923.331312bb.chunk.js.map": "/partyrentals/pc_frontend/static/js/923.331312bb.chunk.js.map",
+    "627.28f7538c.chunk.js.map": "/partyrentals/pc_frontend/static/js/627.28f7538c.chunk.js.map",
+    "938.259a1363.chunk.js.map": "/partyrentals/pc_frontend/static/js/938.259a1363.chunk.js.map",
+    "247.65c55201.chunk.js.map": "/partyrentals/pc_frontend/static/js/247.65c55201.chunk.js.map",
+    "82.a51a5601.chunk.js.map": "/partyrentals/pc_frontend/static/js/82.a51a5601.chunk.js.map",
+    "768.0622d08c.chunk.js.map": "/partyrentals/pc_frontend/static/js/768.0622d08c.chunk.js.map",
+    "834.2c48c761.chunk.js.map": "/partyrentals/pc_frontend/static/js/834.2c48c761.chunk.js.map",
+    "453.88c03b0f.chunk.js.map": "/partyrentals/pc_frontend/static/js/453.88c03b0f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.674c8121.css",
-    "static/js/main.23974e82.js"
+    "static/css/main.4cb75a4a.css",
+    "static/js/main.8d150528.js"
   ]
 }
