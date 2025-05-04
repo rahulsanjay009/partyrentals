@@ -7,6 +7,9 @@ const useProducts = (categoryName = 'ALL') => {
   const [statusMessage, setStatusMessage] = useState('')
 
   useEffect(() => {
+    if(categoryName == 'Home')
+        return
+    setProductsLoading(true)
     APIService()
       .fetchProducts(categoryName)
       .then(res => {
