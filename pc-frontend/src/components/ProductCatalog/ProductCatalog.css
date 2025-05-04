@@ -1,0 +1,11 @@
+.ion_card{
+    margin:15px !important;
+    background: linear-gradient(45DEG,#EEEEEE,#FAF8F9,#FFFFFF)
+}
+.ion_img{
+    width:100%;
+}
+.ion_title{
+    --background: #4dabf5;
+    --color:white
+}
