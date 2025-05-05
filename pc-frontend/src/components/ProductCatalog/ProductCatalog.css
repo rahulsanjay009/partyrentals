@@ -13,34 +13,9 @@
     display:flex;
     align-items: center;
     gap:10px;
+    text-wrap: wrap;
 }
 
-/* CSS for sliding effect */
-.category-list {
-    padding-left: 0;
-    margin-left: 0;
-    transition: transform 0.3s ease-out;
-    transform: translateX(-100%);
-  }
-  
-  .category-list.expanded {
-    transform: translateX(0);
-    padding-left: 20px; /* Add some space to the left of the list */
-  }
-  
-  .category-list .IonItem {
-    transition: transform 0.3s ease-out;
-  }
-  
-  .category-list .IonItem {
-    opacity: 0;
-    transform: translateX(-30px); /* Initially move category items to the left */
-  }
-  
-  .category-list.expanded .IonItem {
-    opacity: 1;
-    transform: translateX(0); /* Slide in the category items */
-  }
   
   .categories{
     display: flex;
@@ -48,23 +23,57 @@
     width:100%
   }
 
-  .content{
-    color:white;
-    --background:#267e2ab3;
+  .content {
+    position: relative;
+    color: white;
+    --background: none; 
+    overflow: hidden;
   }
+  
+  .content::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg,#cda132ac,#cda1324c,#d7ad2335), url('https://res.cloudinary.com/dmm4awbwm/image/upload/f_auto,q_auto/fkzbvjgplyyvtfsbgtij');
+    background-size:contain;
+    filter: brightness(0.5); /* Lower value = darker image */
+    z-index: -1; /* Push behind the actual content */
+  }
+  
 
   .categories_cards{
     display:flex;
     flex-wrap: wrap;
     justify-content: space-around;
   }
-
+.ion_contact_us{
+    padding:10px;
+    margin-left:10px;
+    margin-right:10px;
+    display:flex;
+    gap:15px;
+    justify-content: center;
+}
+.instagram{ 
+    background: #f09433; 
+  background: -moz-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); 
+  background: -webkit-linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+  background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
+    }
   .category_card{
-    width:44%;
+    width:40%; 
+    text-align: center;
+    color: rgba(52, 52, 52, 0.683);
+    img{
+        border-radius: 50px;
+    }
   }
 
+.ion_menu_button{
+    --color:white
+}
 
-  
 .styled-text{
     width:150px;
     text-wrap: wrap;
