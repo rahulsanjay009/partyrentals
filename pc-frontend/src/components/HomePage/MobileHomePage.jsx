@@ -7,6 +7,7 @@ import {
     IonHeader,
     IonImg,
     IonItem,
+    IonLabel,
     IonLoading,
     IonMenuButton,
     IonPage,

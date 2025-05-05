@@ -9,7 +9,6 @@ import {
     IonIcon
   } from '@ionic/react';
   import { useState } from 'react';
-  import { chevronDownOutline } from 'ionicons/icons';
   
   const MobileResponsiveMenu = ({ categories, selectCategory, currentCategory }) => {
     const [selectedCategory, setSelectedCategory] = useState(currentCategory || "Home");
