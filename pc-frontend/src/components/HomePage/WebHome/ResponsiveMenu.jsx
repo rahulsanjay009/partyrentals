@@ -37,12 +37,14 @@ const ResponsiveMenu = ({ categories }) => {
     <AppBar position="static" color="success">
       <Toolbar sx={{ flexWrap: 'wrap' }}>
         <Box sx={{ display: 'flex', flexGrow: 1, alignItems: 'center', gap: 2 }}>
+          <a href='/' style={{cursor:'pointer'}}>
           <img
             src="https://res.cloudinary.com/dmm4awbwm/image/upload/f_auto,q_auto/tsee5mrm7cymclmefpic"
             alt="Logo"
             height="50"
             width="50"
           />
+          </a>
           <Box>
             <Typography fontWeight="bold">Sri Krishna</Typography>
             <Typography variant="body2">Party Rentals LLC</Typography>

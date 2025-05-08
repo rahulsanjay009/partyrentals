@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, CircularProgress } from '@mui/material';
+import { Box } from '@mui/material';
 import ProductSearchBar from '../../ProductSearchBar/ProductSearchBar';
 import ProductCatalog from '../../ProductCatalog/ProductCatalog';
 import useProducts from '../../../utils/useProducts';
@@ -20,17 +20,14 @@ const ProductCatalogPage = () => {
         : products;
 
     return (
-        <>
+        <>        
+        { productsLoading && <div className='loader-overlay'> <div className='loader'> </div> </div>}
             <Box sx={{ display: 'flex', gap: 2, p: 2, alignItems: 'center' }}>
                 <ProductSearchBar selectSearchText={setSearchText} />
             </Box>
-            {productsLoading ? (
-                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-                    <CircularProgress color="success" />
-                </Box>
-            ) : (
+
                 <ProductCatalog products={filteredProducts} />
-            )}
+          
         </>
     );
 };

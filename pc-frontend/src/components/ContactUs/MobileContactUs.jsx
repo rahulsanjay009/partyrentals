@@ -42,10 +42,10 @@ const MobileContactUs = () => {
 
             <div style={{ padding: '0 1rem 1rem', textAlign: 'center' }}>
                 <IonText>
-                    2619 Cordelia Ln, Tracy, CA 95377, United States.
-                </IonText><br />
-                <IonText>
-                    Contact: <a href="tel:16692688087" style={{ color: '#2c7be5', textDecoration: 'none' }}>(669) 268-8087</a>
+                    2619 Cordelia Ln, Tracy, CA 95377, United States&nbsp;|&nbsp;Contact: <a href="tel:16692688087" style={{ color: '#2c7be5', textDecoration: 'none' }}>(669) 268-8087</a>
+                </IonText><br/>
+                <IonText style={{fontSize:'14px'}}>
+                    © {new Date().getFullYear()} Sri Krishna Party Rentals LLC. All rights reserved.
                 </IonText>
             </div>
         </>

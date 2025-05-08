@@ -1,18 +1,13 @@
-import { Box, Typography, CardContent } from '@mui/material';
+import { Box, Typography, CardContent, CircularProgress } from '@mui/material';
 import StyledCard from './StyledCard';
 import CardCarousel from '../../Carousel/CardCarousel';
 import useEvents from '../../../utils/useEvents';
 import useCategories from '../../../utils/useCategories';
-import { useNavigate, useLocation } from 'react-router-dom';
+import CategoryCards from './CategoryCards';
 
 const HomeLanding = () => {
     const {events,eventsLoading} = useEvents()
-    const {categories, loading} = useCategories()
-    const navigate = useNavigate();
-    const handleClick = (category) => {
-        const route = category === 'Home' ? '/' : `/${encodeURIComponent(category)}`;
-        navigate(route);
-    }
+    const {categories,loading} = useCategories()
     return (
     <Box>
         <StyledCard sx={{ padding: '15px' }}>
@@ -26,43 +21,7 @@ const HomeLanding = () => {
                 </Typography>
             </CardContent>
         </StyledCard>
-        <Box display="flex" flexWrap="wrap" justifyContent="start" className="categories_cards">
-            {/* ALL Card */}
-            <Box onClick={() => handleClick('/ALL')} sx={'cardStyle'}>
-                <img
-                src="https://thumbs.dreamstime.com/b/event-supplies-flat-glyph-icons-party-equipment-stage-constructions-visual-projector-stanchion-flipchart-marquee-signs-115703883.jpg"
-                alt="All"
-                width={100}
-                height={100}
-                />
-                <Typography variant="body1" mt={1}>
-                All
-                </Typography>
-            </Box>
-
-            {/* Category Cards */}
-            {categories.map((cat) => (
-                <Box
-                key={cat.id || cat.name}
-                onClick={() => handleClick(cat.name)}
-                sx={'cardStyle'}
-                >
-                <img
-                    src={
-                    cat.image_url
-                        ? cat.image_url
-                        : 'https://res.cloudinary.com/dmm4awbwm/image/upload/v1746672352/rlrckqhdnfdnvohwt4xb.png'
-                    }
-                    alt={cat.name}
-                    width={100}
-                    height={100}
-                />
-                <Typography variant="body2" fontWeight={300} fontSize={14} mt={1}>
-                    {cat.name}
-                </Typography>
-                </Box>
-            ))}
-            </Box>
+        {loading? <CircularProgress value={75} size={75}/> : <CategoryCards categories={categories}/> }
         <CardCarousel events={events}/>
     </Box>
 )};

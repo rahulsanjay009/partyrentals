@@ -30,13 +30,15 @@ const MobileHomePage = () => {
             </IonButtons>
             <IonTitle>
               <div className="ion_title">
-                <img
+               <a href='/'> 
+               <img
                   src="https://res.cloudinary.com/dmm4awbwm/image/upload/f_auto,q_auto/tsee5mrm7cymclmefpic"
                   alt="Kitten"
                   height="30"
                   width="30"
                 />
-                <IonText>{!category || category === '/ALL' ? "Sri Krishna Party Rentals" : category.replace('/','')}</IonText>
+                </a>
+                <IonText>{!category || category === '/ALL' ? "Sri Krishna Party Rentals LLC" : category.replace('/','')}</IonText>
               </div>
             </IonTitle>
           </IonToolbar>
