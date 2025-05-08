@@ -1,5 +1,5 @@
 const APIService = () => {
-    const APIENDPOINT = 'https://chinnisanjay2504.pythonanywhere.com'
+    const APIENDPOINT = 'https://backend.srikrishnapartyrentalsllc.com'
     // const APIENDPOINT = 'http://localhost:8000'
     const makeRequest = async (url, method = 'GET', data = null, headers = {}) => {
         try {
@@ -30,7 +30,7 @@ const APIService = () => {
     };
 
     const fetchCategories = () => {
-        const url = `${APIENDPOINT}/inventory/categories`;
+        const url = `${APIENDPOINT}/inventory/fetch_categories`;
         return makeRequest(url, 'GET');
     };
     const fetchProducts = (category = 'ALL') => {
@@ -38,9 +38,15 @@ const APIService = () => {
         const url = `${APIENDPOINT}/inventory/products?list=${category}`;
         return makeRequest(url, 'GET');
     };
+
+    const fetchEvents = () => {        
+        const url = `${APIENDPOINT}/inventory/recent_events`;
+        return makeRequest(url, 'GET');
+    };
     return {
         fetchCategories,
-        fetchProducts  
+        fetchProducts,
+        fetchEvents
     };
 };
 

@@ -38,6 +38,18 @@ const HomePage = () => {
                     > 
                     Inventory 
                 </Button>
+                <Button className = {styles.nav_button}
+                    variant={(component == 'RE')?'contained' : 'outlined'}
+                    onClick={() => {navigate('/recentEvents'); setComponent('RE')}} 
+                    > 
+                    Recent Events
+                </Button>
+                <Button className = {styles.nav_button}
+                    variant={(component == 'C')?'contained' : 'outlined'}
+                    onClick={() => {navigate('/categories'); setComponent('C')}} 
+                    > 
+                    Categories
+                </Button>
 
 
             </div>

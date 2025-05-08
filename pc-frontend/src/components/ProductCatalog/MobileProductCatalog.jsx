@@ -2,6 +2,7 @@ import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, Ion
 import './ProductCatalog.css'
 
 const MobileProductCatalog = ({products = []}) => {
+
     return (
         <>
         {

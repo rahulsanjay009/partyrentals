@@ -11,13 +11,13 @@ const useCategories = () => {
       .fetchCategories()
       .then(res => {
         if(res.success){
-            setCategories(res?.categories);
-            setLoading(false);
+            setCategories(res?.categories);            
             setStatusMessage("Fetched Succesfully");
         }
         else{
             setStatusMessage(res?.error)
         }
+        setLoading(false);
       })
       .catch(err => {
         console.error(err);

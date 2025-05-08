@@ -4,19 +4,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
-const MobileCardCarousel = () => {
-  const cards = [
-    {
-      title: 'Baby Gender Reveal',
-      img: 'https://res.cloudinary.com/dmm4awbwm/image/upload/v1746409559/1737398583_ce2e392e3bf1af55c475_qjklhx.jpg',
-    //   content: 'Make birthdays unforgettable with our party setups.',
-    },
-    {
-      title: 'Pongal',
-      img: 'https://res.cloudinary.com/dmm4awbwm/image/upload/v1746409565/1737398160_d3ed20cfbee9d77692bd_mqpf2b.jpg',
-    //   content: 'Elegant decorations and rentals for your big day.',
-    }
-  ];
+const MobileCardCarousel = ({events}) => {
+  
 
   return (
     <>
@@ -32,14 +21,14 @@ const MobileCardCarousel = () => {
         1200: { slidesPerView: 4.2 },
       }}
     >
-      {cards.map((card, idx) => (
+      {events.map((card, idx) => (
         <SwiperSlide key={idx}>
           <IonCard>
-            <IonImg src={card.img} />
+            <IonImg src={card.image_url} />
             <IonCardHeader>
-              <IonCardTitle>{card.title}</IonCardTitle>
+              <IonCardTitle>{card.event_name}</IonCardTitle>
             </IonCardHeader>
-            <IonCardContent>{card.content}</IonCardContent>
+            <IonCardContent>{card.event_description}</IonCardContent>
           </IonCard>
         </SwiperSlide>
       ))}

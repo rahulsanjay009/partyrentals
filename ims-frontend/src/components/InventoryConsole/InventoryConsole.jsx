@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styles from './InventoryConsole.module.css'
 import AddIcon from '@mui/icons-material/Add';
-import {TableCell, TableContainer, TableHead, TableRow, Paper, Table, TableBody, Button, TextField, Snackbar} from '@mui/material';
+import {TableCell, TableContainer, TableHead, TableRow, Paper, Table, TableBody, Button, TextField, Snackbar, Box} from '@mui/material';
 import APIService from '../../services/APIService';
 import SearchFilterAddInventory from './SearchFilterAddInventory';
 import AddProductModal from './AddProductModal';
@@ -59,22 +59,38 @@ const InventoryConsole = () => {
     
     // Save edited product
     const saveEditedProduct = (updatedProduct) => {
-        // console.log(updatedProduct)
-        setLoader(true)
-        APIService().editProduct(updatedProduct).then((res) => {
-        if (res.success) {
-            // console.log(res)
-            const updatedProducts = products.map((product) =>
-            product.id === updatedProduct.id ? updatedProduct : product
-            );
-            setProducts(updatedProducts);
-            setEditingProduct(null); 
-            setMessage('Item details saved...')
-        } else {
-            setMessage(res.error);
+        setLoader(true);
+        
+        const formData = new FormData();
+        formData.append('id', updatedProduct.id);
+        formData.append('name', updatedProduct.name);
+        formData.append('description', updatedProduct.description || '');
+        formData.append('price', updatedProduct.price);
+        formData.append('total_qty', updatedProduct.total_qty);
+        formData.append('category', updatedProduct.category);
+    
+        if (updatedProduct.imageFile) {
+            formData.append('image', updatedProduct.imageFile);  // Must match backend key
         }
-        }).catch((err) =>  console.log(err)).finally(()=> setLoader(false));
+    
+        APIService().editProduct(formData)
+            .then((res) => {
+                if (res.success) {
+                    updatedProduct.image_url = res.image_url
+                    const updatedProducts = products.map((product) =>
+                        product.id === updatedProduct.id ? updatedProduct : product
+                    );
+                    setProducts(updatedProducts);
+                    setEditingProduct(null);
+                    setMessage('Item details saved...');
+                } else {
+                    setMessage(res.error);
+                }
+            })
+            .catch((err) => console.log(err))
+            .finally(() => setLoader(false));
     };
+    
     
     // Delete product handler
     const handleDeleteProduct = (productId) => {
@@ -123,22 +139,23 @@ const InventoryConsole = () => {
                     <Table sx={{minWidth: 650}}>                    
                         <TableHead>
                             <TableRow>
-                                <TableCell> S.NO </TableCell>
-                                <TableCell> Product </TableCell>
-                                <TableCell className={styles.category_cell}>     
+                                <TableCell size='medium'> S.NO </TableCell>
+                                <TableCell  size='medium' > Product </TableCell>
+                                <TableCell  size='medium' className={styles.category_cell}>     
                                     Category 
                                     <Button onClick={() => setShowAddCategory(true)}><AddIcon className={styles.plus_icon}/> </Button>
-                                </TableCell>            
-                                <TableCell> Price per unit </TableCell>
-                                <TableCell> Total Qty </TableCell>
-                                <TableCell> Available Qty </TableCell>
+                                </TableCell>   
+                                <TableCell size='medium' > Image </TableCell>         
+                                <TableCell size='medium' > Price per unit </TableCell>
+                                <TableCell size='medium' > Total Qty </TableCell>
+                                <TableCell size='medium' > Available Qty </TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {products?.map((item, idx) => (
                                 <TableRow key={item.id}>
                                 <TableCell> {idx + 1} </TableCell>
-                                <TableCell>
+                                <TableCell sx={{maxWidth:'250px'}}>
                                     {editingProduct?.id === item.id ? (
                                     <TextField
                                         value={editingProduct?.name}
@@ -158,6 +175,26 @@ const InventoryConsole = () => {
                                     item.category
                                     )}
                                 </TableCell>
+                                <TableCell>
+                                    {editingProduct?.id === item.id ? (
+                                        <>
+                                            <input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={(e) => setEditingProduct({ 
+                                                    ...editingProduct, 
+                                                    imageFile: e.target.files[0] 
+                                                })}
+                                                style={{marginBottom:'5px'}}
+                                            /> 
+                                            {editingProduct?.image_url && <img src={editingProduct.image_url} alt="" width={50} />}
+                                        </>
+                                    ) : (
+                                        <img src={`${item.image_url}`} alt={''} height='75' width='75'/>
+                                    )}
+                                </TableCell>
+
+
                                 <TableCell>
                                     {editingProduct?.id === item.id ? (
                                     <TextField
@@ -184,12 +221,21 @@ const InventoryConsole = () => {
                                     }
                                 </TableCell>
                                 <TableCell>
+                                    <Box display={'flex'} gap={'15px'}>
                                     {editingProduct?.id === item.id ? (
-                                    <Button onClick={() => saveEditedProduct(editingProduct)}>Save</Button>
+                                        <>
+                                            <Button onClick={() => saveEditedProduct(editingProduct)}>Save</Button>
+                                            <Button onClick={() => setEditingProduct(null)}>Cancel</Button>
+                                        </>                                    
                                     ) : (
-                                    <Button onClick={() => handleEditProduct(item)}>Edit</Button>
+                                        <>
+                                            <Button onClick={() => handleEditProduct(item)}>Edit</Button>
+                                            <Button onClick={() => handleDeleteProduct(item.id)}>Delete</Button>
+                                        </>
+                                    
                                     )}
-                                    <Button onClick={() => handleDeleteProduct(item.id)}>Delete</Button>
+                                    
+                                    </Box>
                                 </TableCell>
                                 </TableRow>
                             ))}

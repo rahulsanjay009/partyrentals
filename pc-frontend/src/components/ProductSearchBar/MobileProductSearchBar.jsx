@@ -4,7 +4,7 @@ import { useState } from "react";
 const MobileProductSearchBar = ({selectSearchText}) => {
     const [searchText,setSearchText] = useState('')
     return (
-   
+        
         <IonSearchbar
             value={searchText}
             onIonInput={(e)=>{setSearchText(e.target.value); selectSearchText(e.target.value);}}

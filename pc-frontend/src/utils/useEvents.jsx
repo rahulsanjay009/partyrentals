@@ -1,40 +1,37 @@
 import { useEffect, useState } from 'react';
 import APIService from '../services/APIService';
 
-const useProducts = (categoryName = 'ALL') => {
-  const [products, setProducts] = useState([]);
-  const [productsLoading, setProductsLoading] = useState(true);
+const useEvents = () => {
+  const [events, setEvents] = useState([]);
+  const [eventsLoading, setEventsLoading] = useState(true);
   const [statusMessage, setStatusMessage] = useState('')
 
   useEffect(() => {
-    if(categoryName == 'Home'){
-      setProductsLoading(false)
-      return
-    }
-    setProductsLoading(true)
+
+    setEventsLoading(true)
     APIService()
-      .fetchProducts(categoryName)
+      .fetchEvents()
       .then(res => {
         if(res.success){
-            setProducts(res?.products);            
+            setEvents(res?.events);            
             setStatusMessage("Fetched Succesfully");
         }
         else{
             setStatusMessage(res?.error)
         }
-        setProductsLoading(false);
+        setEventsLoading(false);
       })
       .catch(err => {
         console.error(err);        
       }).finally(() => {
-        setProductsLoading(false)
+        setEventsLoading(false)
         setTimeout(()=>{
             setStatusMessage('')
         },5000)
       });
-  }, [categoryName]);
+  }, []);
 
-  return { products, productsLoading, statusMessage };
+  return { events, eventsLoading, statusMessage };
 };
 
-export default useProducts;
+export default useEvents;

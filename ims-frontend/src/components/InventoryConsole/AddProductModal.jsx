@@ -1,4 +1,4 @@
-import { TextField, Button,  Autocomplete } from '@mui/material';
+import { TextField, Button, Autocomplete, Box, Typography } from '@mui/material';
 import styles from './InventoryConsole.module.css';
 import { useEffect, useState } from 'react';
 import APIService from '../../services/APIService';
@@ -10,6 +10,7 @@ const AddProductModal = ({ type, updateMessage, updateShowAddCategory }) => {
         { id: 'price', value: 'Price per unit' },
         { id: 'total_qty', value: 'Total in hand quantity' }
     ];
+
     const [image, setImage] = useState(null);
     const [captureProduct, setCaptureProduct] = useState({
         name: '', description: '', price: '', total_qty: '', category: ''
@@ -29,7 +30,7 @@ const AddProductModal = ({ type, updateMessage, updateShowAddCategory }) => {
     const fetchCategories = () => {
         APIService().fetchCategories().then((data) => {
             if (data?.success) {
-                setCategoryList((prev) => data?.categories);
+                setCategoryList(data?.categories);
             }
         }).catch((err) => console.log(err));
     };
@@ -38,8 +39,7 @@ const AddProductModal = ({ type, updateMessage, updateShowAddCategory }) => {
         if (type === 'product') {
             fetchCategories();
         }
-        // console.log(captureProduct)
-    }, [type, captureProduct]);
+    }, [type]);
 
     const saveProduct = async () => {
         // Check if any product field is empty
@@ -51,15 +51,18 @@ const AddProductModal = ({ type, updateMessage, updateShowAddCategory }) => {
             setTimeout(() => setShowMsg(''), 2000);
             return;
         }
-    
-        try {
-            const uploadResult = await uploadImageToCloudinary(image);
-            if (uploadResult.success) {
-                const updatedProduct = {
-                    ...captureProduct,
-                    image_url: uploadResult.url
-                };
-                const res = await APIService().saveProduct(updatedProduct);
+
+        const formData = new FormData();
+        formData.append('name', captureProduct.name);
+        formData.append('description', captureProduct.description);
+        formData.append('price', captureProduct.price);
+        formData.append('total_qty', captureProduct.total_qty);
+        formData.append('category', captureProduct.category);
+        formData.append('image', image);  // This sends the image file itself
+
+        APIService().saveProduct(formData)
+            .then(res => {                
+
                 if (res.success) {
                     updateMessage('Product added successfully');
                     setCaptureProduct({
@@ -69,18 +72,20 @@ const AddProductModal = ({ type, updateMessage, updateShowAddCategory }) => {
                     updateShowAddCategory(false);
                 } else {
                     setShowMsg('Product with the name already exists!!!');
+
                 }
-            } else {
-                setShowMsg('Image upload failed');
-            }
-        } catch (err) {
-            console.error(err);
-            setShowMsg('An error occurred. Please try again.');
-        }
-    
-        setTimeout(() => setShowMsg(''), 2000);
+            })
+            .catch((err) => {
+                console.error(err);
+                setShowMsg('An error occurred. Please try again.');
+            })
+            .finally(() => {
+                setTimeout(() => setShowMsg(''), 2000);
+                
+            });
+
+        
     };
-    
 
     const saveCategory = () => {
         if (category === '') {
@@ -108,103 +113,86 @@ const AddProductModal = ({ type, updateMessage, updateShowAddCategory }) => {
         });
     };
 
-    const uploadImageToCloudinary = async (file) => {
-        if (!file) return { success: false };
-    
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('upload_preset', 'unsigned_preset'); // Replace with your preset
-    
-        try {
-            const response = await fetch('https://api.cloudinary.com/v1_1/dmm4awbwm/image/upload', {
-                method: 'POST',
-                body: formData,
-            });
-    
-            const data = await response.json();
-            console.log(data)
-            if (data.secure_url) {
-                return { success: true, url: data.secure_url };
-            } else {
-                return { success: false };
-            }
-        } catch (error) {
-            console.error('Upload failed:', error);
-            return { success: false };
-        }
-    };
-    
     const renderProductForm = () => (
+        <Box
+            sx={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                gap: 2,
+                width: '100%',
+                maxWidth: 1000,
+                margin: '0 auto',
+            }}
+        >
+            {/* Category Field + Price (Row 1) */}
+            <Box sx={{ flex: '1 1 calc(50% - 8px)' }}>
+                <Typography variant="body2" gutterBottom>
+                    Category
+                </Typography>
+                <Autocomplete
+                    value={captureProduct.category}
+                    onChange={(e, value) => addProductData('category', value)}
+                    disablePortal
+                    options={categoryList}
+                    renderInput={(params) => <TextField {...params} label="Select Category" fullWidth />}
+                />
+            </Box>
+
+            {/* Dynamic Fields (Remaining Attributes) */}
+            {productAttributes.map((item) => (
+                <Box key={item.id} sx={{ flex: '1 1 calc(50% - 8px)' }}>
+                    <Typography variant="body2" gutterBottom>
+                        {item.value}
+                    </Typography>
+                    <TextField
+                        fullWidth
+                        variant="outlined"
+                        type={item.id === 'price' || item.id === 'total_qty' ? 'number' : 'text'}
+                        onChange={(e) => addProductData(item.id, e.target.value)}
+                        value={captureProduct[item.id]}
+                    />
+                </Box>
+            ))}
+
+            <Box sx={{ flex: '1 1 calc(50% - 8px)' }}>
+                <Typography variant="body2" gutterBottom>
+                    Image
+                </Typography>
+                <TextField
+                    fullWidth
+                    variant="outlined"
+                    type="file"
+                    onChange={(e) => setImage(e.target.files[0])}
+                />
+            </Box>
+
+            {/* Save Button (Row 3) */}
+            <Box sx={{ flex: '1 1 100%', textAlign: 'right' }}>
+                <Button variant="contained" onClick={saveProduct}>
+                    Save
+                </Button>
+            </Box>
+        </Box>
+    );
+
+    const renderCategoryForm = () => (
         <>
-          
             <div className={styles.modal_item} key="category">
                 <div className={styles.modal_item_label}>
                     Category
                 </div>
                 <div className={styles.modal_item_input}>
-                <Autocomplete
-                    value = {captureProduct.category}
-                    onChange={(e,value)=>{
-                        addProductData('category',value)
-                    }}
-                    disablePortal
-                    options={categoryList}
-                    sx={{ width: "100%" }}
-                    renderInput={(params) => <TextField {...params} label="Select Category" />}
-                    />
-                </div>
-         
-            </div>
-
-            {productAttributes.map((item) => (
-                <div className={styles.modal_item} key={item.id}>
-                    <div className={styles.modal_item_label}>
-                        {item.value}
-                    </div>
-                    <div className={styles.modal_item_input}>
-                        <TextField
-                            fullWidth='100%'
-                            variant='outlined'
-                            type={item.id === "price" || item.id === "total_qty" ? "number" : "text"}
-                            onChange={(e) => addProductData(item.id, e.target.value)}
-                            value={captureProduct[item.id]}
-                        />
-                    </div>
-                </div>
-            ))}
-            <div className={styles.modal_item} key={"image"}>
-                <div className={styles.modal_item_label}>
-                    {"Image"}
-                </div>
-                <div className={styles.modal_item_input}>
                     <TextField
-                        fullWidth='100%'
-                        variant='outlined'
-                        type={"file"}
-                        onChange={(e) => setImage(e.target.files[0])}                        
-                    />
-                </div>
-            </div>
-            <Button variant='contained' onClick={saveProduct}>Save</Button>
-        </>
-    );
-
-    const renderCategoryForm = () => (
-        <>
-            <div className={styles.modal_item} key='category'>
-                <div className={styles.modal_item_label}>
-                    Category
-                </div>
-                <div className={styles.modal_item_input}>
-                    <TextField
-                        variant='outlined'
+                        variant="outlined"
                         type="text"
                         onChange={(e) => setCategory(e.target.value)}
                         value={category}
                     />
                 </div>
             </div>
-            <Button variant='contained' onClick={saveCategory}>Save</Button>
+            <Button variant="contained" onClick={saveCategory}>
+                Save
+            </Button>
         </>
     );
 

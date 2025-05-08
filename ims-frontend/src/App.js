@@ -5,6 +5,8 @@ import { HashRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
 import Orders from './components/Orders/Orders';
 import ScheduledPickups from './components/ScheduledPickups/ScheduledPickups';
 import OldOrders from './components/OldOrders/OldOrders';
+import RecentEventsConsole from './components/RecentEvents/RecentEventsConsole';
+import CategoriesConsole from './components/Categories/CategoriesConsole';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
           <Route path="/inventory" element ={<InventoryConsole/>} />
           <Route path='/scheduledPickups' element = {<ScheduledPickups/>}/>
           <Route path='/oldOrders' element = {<OldOrders/>} />
+          <Route path='/recentEvents' element={<RecentEventsConsole/>} />
+          <Route path='/categories' element={<CategoriesConsole/>} />
         </Route>
       </Routes>
     </Router>
