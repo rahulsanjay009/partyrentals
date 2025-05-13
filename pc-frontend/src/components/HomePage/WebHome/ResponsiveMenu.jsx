@@ -12,38 +12,44 @@ import {
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 const ResponsiveMenu = ({ categories }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
-  const currentPath = decodeURIComponent(location.pathname).replace('/', '') || 'Home';
+  const allCategories = useMemo(() => ['ALL', ...categories.map((c) => c.name)], [categories]);
+
+  const currentPath = decodeURIComponent(location.pathname).slice(1).toLowerCase();
+
+  const isActive = (routeName) => {
+    const normalizedRoute = routeName.toLowerCase();
+    return (
+      (normalizedRoute === 'home' && currentPath === '') ||
+      currentPath === normalizedRoute
+    );
+  };
 
   const handleMenuClick = (event) => setAnchorEl(event.currentTarget);
   const handleClose = () => setAnchorEl(null);
 
   const handleSelect = (category) => {
-    const route = category === 'Home' ? '/' : `/${encodeURIComponent(category)}`;
+    const route = category.toLowerCase() === 'home' ? '/' : `/${encodeURIComponent(category)}`;
     navigate(route);
     handleClose();
   };
 
-  const allCategories = useMemo(() => ['ALL', ...categories], [categories]);
-
-  const isActive = (routeName) =>
-    currentPath.toLowerCase() === routeName.toLowerCase();
-
   return (
     <AppBar position="static" color="success">
       <Toolbar sx={{ flexWrap: 'wrap' }}>
+        {/* Logo & Address Section */}
         <Box sx={{ display: 'flex', flexGrow: 1, alignItems: 'center', gap: 2 }}>
-          <a href='/' style={{cursor:'pointer'}}>
-          <img
-            src="https://res.cloudinary.com/dmm4awbwm/image/upload/f_auto,q_auto/tsee5mrm7cymclmefpic"
-            alt="Logo"
-            height="50"
-            width="50"
-          />
+          <a href='/' style={{ cursor: 'pointer' }}>
+            <img
+              src="https://res.cloudinary.com/dmm4awbwm/image/upload/f_auto,q_auto/tsee5mrm7cymclmefpic"
+              alt="Logo"
+              height="50"
+              width="50"
+            />
           </a>
           <Box>
             <Typography fontWeight="bold">Sri Krishna</Typography>
@@ -54,12 +60,13 @@ const ResponsiveMenu = ({ categories }) => {
           </Typography>
         </Box>
 
+        {/* Navigation Section */}
         <Box sx={{ display: 'flex', gap: 2 }}>
           <Button
             onClick={() => handleSelect('Home')}
             sx={{
-              color: isActive('Home') ? 'yellow' : 'white',
-              fontWeight: isActive('Home') ? 'bold' : 'normal',
+              color: isActive('home') ? 'yellow' : 'white',
+              fontWeight: isActive('home') ? 'bold' : 'normal',
             }}
           >
             Home
@@ -67,15 +74,18 @@ const ResponsiveMenu = ({ categories }) => {
 
           <Button
             onClick={handleMenuClick}
-            sx={{ color: open || [{name:'ALL'},categories].some((cat) => cat?.name === currentPath) ? 'yellow' : 'white' }}
+            sx={{
+              color: currentPath && allCategories.some(cat => cat.toLowerCase() === currentPath) ? 'yellow' : 'white',
+              fontWeight: 'normal',
+            }}
           >
             Rentals <ArrowDropDownIcon />
           </Button>
 
-          <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>            
-            {[...allCategories,{name:'ALL'}].map((category, index) => (
-              <MenuItem key={index} onClick={() => handleSelect(category?.name)}>
-                {category?.name}
+          <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
+            {allCategories.map((name, index) => (
+              <MenuItem key={index} onClick={() => handleSelect(name)}>
+                {name}
               </MenuItem>
             ))}
           </Menu>

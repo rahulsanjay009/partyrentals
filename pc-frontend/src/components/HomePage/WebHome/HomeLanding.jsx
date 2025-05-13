@@ -9,7 +9,7 @@ const HomeLanding = () => {
     const {events,eventsLoading} = useEvents()
     const {categories,loading} = useCategories()
     return (
-    <Box>
+    <Box sx={{margin:2}}>
         <StyledCard sx={{ padding: '15px' }}>
             <CardContent sx={{ padding: '15px' }}>
                 <Typography fontSize={'46px'}>

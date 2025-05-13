@@ -21,12 +21,12 @@ const ProductCatalogPage = () => {
 
     return (
         <>        
-        { productsLoading && <div className='loader-overlay'> <div className='loader'> </div> </div>}
+        {/* { productsLoading && <div className='loader-overlay'> <div className='loader'> </div> </div>} */}
             <Box sx={{ display: 'flex', gap: 2, p: 2, alignItems: 'center' }}>
                 <ProductSearchBar selectSearchText={setSearchText} />
             </Box>
 
-                <ProductCatalog products={filteredProducts} />
+            <ProductCatalog products={filteredProducts} />
           
         </>
     );

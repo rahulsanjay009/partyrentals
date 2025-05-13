@@ -38,7 +38,17 @@ const MobileHomePage = () => {
                   width="30"
                 />
                 </a>
-                <IonText>{!category || category === '/ALL' ? "Sri Krishna Party Rentals LLC" : category.replace('/','')}</IonText>
+                <IonText>
+                {!category || category === '/ALL'
+                  ? (
+                      <>
+                        Sri Krishna<br />
+                        Party Rentals LLC
+                      </>
+                    )
+                  : category.replace('/', '')
+                }
+              </IonText>
               </div>
             </IonTitle>
           </IonToolbar>
