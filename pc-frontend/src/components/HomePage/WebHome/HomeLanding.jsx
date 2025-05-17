@@ -9,7 +9,7 @@ const HomeLanding = () => {
     const {events,eventsLoading} = useEvents()
     const {categories,loading} = useCategories()
     return (
-    <Box sx={{margin:2}}>
+    <Box>
         <StyledCard sx={{ padding: '15px' }}>
             <CardContent sx={{ padding: '15px' }}>
                 <Typography fontSize={'46px'}>
@@ -21,7 +21,7 @@ const HomeLanding = () => {
                 </Typography>
             </CardContent>
         </StyledCard>
-        {loading? <CircularProgress value={75} size={75}/> : <CategoryCards categories={categories}/> }
+        {loading? <CircularProgress value={75} size={80}/> : <CategoryCards categories={categories}/> }
         <CardCarousel events={events}/>
     </Box>
 )};

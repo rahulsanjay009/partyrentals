@@ -7,10 +7,11 @@ import {
   IonCardTitle,
   IonImg,
   IonRow,
-  IonCol,
   IonSpinner,
+  IonText,
 } from "@ionic/react";
 import './ProductCatalog.css';
+import IonIcon from "@reacticons/ionicons";
 
 const BATCH_SIZE = 8;
 
@@ -73,16 +74,28 @@ const MobileProductCatalog = ({ products = [] }) => {
             </div>
           )}
           <IonCardHeader>
-            <IonCardSubtitle>{product.category}</IonCardSubtitle>
-            <IonCardTitle>{product.name}</IonCardTitle>
+          <IonCardTitle>{product.name}</IonCardTitle>
+            <IonCardSubtitle>{product.description}</IonCardSubtitle>
           </IonCardHeader>
           <IonCardContent>
-            <IonRow>
-              <IonCol>
+            <IonRow className="price_contact">
+              <IonText>
                 {product.price == 0
                   ? "$0 - Contact for price"
                   : `$${product.price}`}
-              </IonCol>
+              </IonText>
+              <a
+                    href={`https://wa.me/16692688087?phone=16692688087&text=${encodeURIComponent(
+                      `Hi, I'm interested in this product:\n\n${product.name}\nCategory: ${product.category}\nPrice: ${
+                        product.price === 0 ? "Contact for price" : `$${product.price}`
+                      }\n\nImage: ${product.image_url}\n\nIs this available?`
+                    )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label="WhatsApp"
+                >
+                    <IonIcon name="logo-whatsapp" style={{ height: '30px', width: '30px', color: '#25d366' }} />
+                </a>
             </IonRow>
           </IonCardContent>
         </IonCard>

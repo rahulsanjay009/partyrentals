@@ -24,7 +24,7 @@ const CardCarousel = ({events}) => {
       >
         {events.map((card, idx) => (
           <SwiperSlide key={idx}>
-            <Card sx={{ maxWidth: 320, margin: 'auto' }}>
+            <Card sx={{ maxWidth: 320, m:2 }}>
               <CardMedia
                 component="img"
                 height="250"
@@ -32,11 +32,11 @@ const CardCarousel = ({events}) => {
                 alt={card.event_name}
               />
               <CardHeader title={card.event_name} />
-              {/* <CardContent>
-                <Typography variant="body2" color="text.secondary">
-                  {card.content}
+              <CardContent>
+                <Typography variant="body1" color="text.secondary">
+                  {card.event_description}
                 </Typography>
-              </CardContent> */}
+              </CardContent>
             </Card>
           </SwiperSlide>
         ))}

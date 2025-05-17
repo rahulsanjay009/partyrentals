@@ -34,8 +34,8 @@ const MobileHomePage = () => {
                <img
                   src="https://res.cloudinary.com/dmm4awbwm/image/upload/f_auto,q_auto/tsee5mrm7cymclmefpic"
                   alt="Kitten"
-                  height="30"
-                  width="30"
+                  height="35"
+                  width="35"
                 />
                 </a>
                 <IonText>

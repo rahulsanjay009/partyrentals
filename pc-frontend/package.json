@@ -1,5 +1,6 @@
 {
   "name": "pc-frontend",
+  "homepage": "https://rahulsanjay009.github.io/partyrentals/pc-frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

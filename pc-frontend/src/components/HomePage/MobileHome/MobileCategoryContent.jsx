@@ -19,11 +19,13 @@ const MobileCategoryContent = () => {
         );
 
     return (
-        <>
+        <div style={{position:'relative'}}>
             <IonLoading isOpen={productsLoading} message={'Loading products...'} />
-            <MobileProductSearchBar selectSearchText={setSearchText} />
-            <MobileProductCatalog products={filteredProducts} />
-        </>
+            <div style={{ position: 'sticky', top: 0, zIndex: 1, backgroundColor: 'white', width: '100%' }}>
+                <MobileProductSearchBar selectSearchText={setSearchText} />
+            </div>        
+            <MobileProductCatalog products={filteredProducts} />         
+        </div>
     );
 };
 

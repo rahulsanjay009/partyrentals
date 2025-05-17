@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, redirect } from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -42,7 +42,7 @@ const ResponsiveMenu = ({ categories }) => {
     <AppBar position="static" color="success">
       <Toolbar sx={{ flexWrap: 'wrap' }}>
         {/* Logo & Address Section */}
-        <Box sx={{ display: 'flex', flexGrow: 1, alignItems: 'center', gap: 2 }}>
+        <Box sx={{ display: 'flex', flexGrow: 1, alignItems: 'center'}}>
           <a href='/' style={{ cursor: 'pointer' }}>
             <img
               src="https://res.cloudinary.com/dmm4awbwm/image/upload/f_auto,q_auto/tsee5mrm7cymclmefpic"
@@ -51,10 +51,13 @@ const ResponsiveMenu = ({ categories }) => {
               width="50"
             />
           </a>
-          <Box>
+          <a href='/' style={{ cursor: 'pointer', color:'white', textDecoration:'none' }}>
+          <Box onClick={()=>{redirect('/')}}>
             <Typography fontWeight="bold">Sri Krishna</Typography>
             <Typography variant="body2">Party Rentals LLC</Typography>
           </Box>
+          </a>
+          &nbsp; &nbsp;
           <Typography variant="body2">
             2619 Cordeila Ln, Tracy, CA 95377
           </Typography>
@@ -97,7 +100,7 @@ const ResponsiveMenu = ({ categories }) => {
               fontWeight: isActive('about') ? 'bold' : 'normal',
             }}
           >
-            About
+            About Us
           </Button>
         </Box>
       </Toolbar>

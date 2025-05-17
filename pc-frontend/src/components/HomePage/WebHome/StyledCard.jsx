@@ -5,8 +5,9 @@ const StyledCard = styled(Card)(({ theme }) => ({
   position: 'relative',
   overflow: 'hidden',
   color: 'white',
-  margin: '10px',
-  padding: '5px',
+  mb:2,
+  margin: '10px 0px 10px 0px',
+  borderRadius:'0px',
   zIndex: 1,
   '&::before': {
     content: '""',

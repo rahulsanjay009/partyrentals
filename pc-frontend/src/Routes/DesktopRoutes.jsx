@@ -3,6 +3,7 @@ import HomePage from '../components/HomePage/WebHome/HomePage';
 import HomeLanding from '../components/HomePage/WebHome/HomeLanding';
 import AboutUs from '../components/ContactUs/AboutUs';
 import ProductCatalogPage from '../components/HomePage/WebHome/ProductCatalogPage';
+import DisplayProduct from '../components/ProductCatalog/DisplayProduct';
 
 const DesktopRoutes = () => (
     <Routes>
@@ -11,6 +12,7 @@ const DesktopRoutes = () => (
             <Route path="Home" element={<HomeLanding />} />
             <Route path="about" element={<AboutUs />} />
             <Route path=":category" element={<ProductCatalogPage />} />
+            <Route path='product' element={<DisplayProduct/>} />
         </Route>
     </Routes>
 );
