@@ -36,7 +36,7 @@ const AddOrder = ({orderAdded}) => {
   const [order, setOrder] = useState(initialOrderState);
   const [productList, setProductList] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [quantity, setQuantity] = useState('');
+  const [quantity, setQuantity] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const [loader,setLoader] = useState(false)
   useEffect(() => {
@@ -80,6 +80,7 @@ const AddOrder = ({orderAdded}) => {
   
       setSelectedProduct(null);
       setQuantity('');
+      console.log(order)
     }
   };
   
@@ -119,7 +120,7 @@ const AddOrder = ({orderAdded}) => {
       event_date: order.event_date ? dayjs(order.event_date).format('YYYY-MM-DD') : '',
     };
     
-    // console.log(formattedOrder)
+    console.log(formattedOrder)
     APIService().saveOrder(formattedOrder).then((data) => {
         if(data?.success){
             setErrorMessage('Order Added Successfully');
@@ -174,9 +175,11 @@ const AddOrder = ({orderAdded}) => {
   
   
   return (
+    <>
+    {loader && <div className='loader-overlay'> <div className='loader'> </div></div>} 
     <div className={styles.add_order_layout} onClick={(e) => e.stopPropagation()}>
       {/* Customer Fields */}
-      {loader && <div className='loader-overlay'> <div className='loader'> </div></div>} 
+      
       <div className={styles.add_order_item}>
         {formItems.map((item) => (
           <TextField
@@ -217,7 +220,12 @@ const AddOrder = ({orderAdded}) => {
             label="Quantity"
             type="number"
             value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
+            onChange={(e) => {
+              const value = e.target.value;
+              if (value === '' || Number(value) > 0) {
+                setQuantity(value);
+              }
+            }}
             className={styles.product_input}
           />
           <Button
@@ -253,9 +261,12 @@ const AddOrder = ({orderAdded}) => {
                         type="number"
                         value={item.quantity}
                         onChange={(e) => {
-                          const updatedProducts = [...order.products];
-                          updatedProducts[index] = { ...updatedProducts[index], quantity: e.target.value };
-                          setOrder({ ...order, products: updatedProducts });
+                          const value = e.target.value;
+                          if (value === '' || Number(value) > 0) {
+                            const updatedProducts = [...order.products];
+                            updatedProducts[index] = { ...updatedProducts[index], quantity: Number(value) };
+                            setOrder({ ...order, products: updatedProducts });
+                          }
                         }}
                         className={styles.add_order_textField}
                       />
@@ -374,6 +385,7 @@ const AddOrder = ({orderAdded}) => {
         Submit Order
       </Button>
     </div>
+    </>
   );
 };
 

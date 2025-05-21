@@ -4,6 +4,7 @@ import MobileCardCarousel from "../../Carousel/MobileCardCarousel";
 import useCategories from "../../../utils/useCategories";
 import useEvents from "../../../utils/useEvents";
 import { useNavigate } from "react-router-dom";
+import MobileLatestProductsCarousel from "../../Carousel/MobileLatestProductsCarousel";
 
 // Preload utility function for images
 const preloadImage = (src) =>
@@ -36,7 +37,7 @@ const MobileHomeContent = () => {
     if (!loading && categories.length > 0) {
       preloadCategoryImages(categories).then(() => {
         setImageLoading(false); // Set image loading to false after preloading is complete
-      });
+      }).finally(()=>setImageLoading(false));
     }
   }, [loading, categories]);
 
@@ -87,7 +88,7 @@ const MobileHomeContent = () => {
               <img
                 src={
                   cat.image_url && cat.image_url.trim()
-                    ? cat.image_url
+                    ? encodeURI(cat.image_url)
                     : "https://res.cloudinary.com/dmm4awbwm/image/upload/v1746672352/rlrckqhdnfdnvohwt4xb.png"
                 }
                 alt={"img"}
@@ -105,6 +106,7 @@ const MobileHomeContent = () => {
 
       {/* Event Carousel */}
       <MobileCardCarousel events={events} />
+      <MobileLatestProductsCarousel/>
     </>
   );
 };

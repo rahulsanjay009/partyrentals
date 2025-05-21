@@ -179,7 +179,7 @@ const ProductCatalog = ({ products }) => {
                       
                         component="img"
                         loading="lazy"
-                        image={`${product.image_url}?f_auto,q_auto,w_600`}
+                        image={`${encodeURI(product.image_url)}`}
                         alt={product.name}
                         sx={{   
                           height:250,

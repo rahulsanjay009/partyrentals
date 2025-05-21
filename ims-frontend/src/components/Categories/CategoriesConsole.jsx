@@ -124,17 +124,16 @@ const CategoriesConsole = () => {
                                 </TableCell>
                                 <TableCell>
                                     {editingCategory?.id === cat.id ? (
-                                        <>
+                                        <Box display={'flex'} alignItems={'center'}>
                                         <input
                                             type="file"
                                             onChange={(e) => setEditingCategory({ ...editingCategory, image: e.target.files[0] })}
                                             style={{margin:'10px'}}
                                         />
-                                        <br/>
-                                        <img src={cat.image_url} height='75'/> 
-                                        </>
+                                        <img src={encodeURI(cat.image_url)} height='50' width="50"/> 
+                                        </Box>
                                     ) : (
-                                        <img src={cat.image_url} alt={cat.name} width="50" height="50" />
+                                        <img src={encodeURI(cat.image_url)} alt={cat.name} width="50" height="50" />
                                     )}
                                 </TableCell>
                                 <TableCell>

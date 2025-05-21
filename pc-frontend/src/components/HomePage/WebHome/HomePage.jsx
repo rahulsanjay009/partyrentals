@@ -9,7 +9,7 @@ const HomePage = () => {
     const { categories, loading } = useCategories();
 
     return (
-        <Box sx={{ height: '100vh', overflowY: 'auto' , 
+        <Box sx={{ height: '100vh', overflowY: 'auto' , overflowX:'hidden',
             "&::-webkit-scrollbar": {
                 width: "4px", // set desired width
               },

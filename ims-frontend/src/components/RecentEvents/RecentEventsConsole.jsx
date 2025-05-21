@@ -148,10 +148,10 @@ const RecentEventsConsole = () => {
                         onChange={(e) => setEditingEvent({ ...editingEvent, imageFile: e.target.files[0] })}
                         style={{marginBottom:'10px'}}
                       /> <br/>
-                      <img src={event?.image_url} height='50'/>
+                      <img src={encodeURI(event?.image_url)} height='50'/>
                     </>
                   ) : (
-                    event?.image_url && <img src={event?.image_url} alt="Event" width={75} />
+                    event?.image_url && <img src={encodeURI(event?.image_url)} alt="Event" width={75} />
                   )}
                 </TableCell>
                 <TableCell>

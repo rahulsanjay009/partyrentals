@@ -16,6 +16,7 @@ import MobileAboutUsContent from './components/HomePage/MobileHome/MobileAboutUs
 import MobileCategoryContent from './components/HomePage/MobileHome/MobileCategoryContent';
 import MobileRoutes from './Routes/MobileRoutes';
 
+
 setupIonicReact();
 
 function App() {

@@ -114,7 +114,7 @@ const InventoryConsole = () => {
             setProducts(originalProducts.filter((product) => filteredProducts.some((item) => item?.id === product?.id)))
     }
     return (
-        <div className=''>
+        <div>
             <SearchFilterAddInventory addProductModal={addProductModal} retrieveAvailability={retrieveAvailability} products={originalProducts} filteredProducts={filterProducts}/>
             
             {showAddProductModal && (
@@ -136,7 +136,7 @@ const InventoryConsole = () => {
                         />
             <div className={styles.inventory_layout}>            
                 <TableContainer component={Paper}>
-                    <Table sx={{minWidth: 650}}>                    
+                    <Table sx={{minWidth: 650, overflow:'auto'}}>                    
                         <TableHead>
                             <TableRow>
                                 <TableCell size='medium'> S.NO </TableCell>
@@ -177,7 +177,7 @@ const InventoryConsole = () => {
                                 </TableCell>
                                 <TableCell>
                                     {editingProduct?.id === item.id ? (
-                                        <>
+                                        <Box display={'flex'} alignItems={'center'}>
                                             <input
                                                 type="file"
                                                 accept="image/*"
@@ -185,12 +185,11 @@ const InventoryConsole = () => {
                                                     ...editingProduct, 
                                                     imageFile: e.target.files[0] 
                                                 })}
-                                                style={{marginBottom:'5px'}}
                                             /> 
-                                            {editingProduct?.image_url && <img src={editingProduct.image_url} alt="" width={50} />}
-                                        </>
+                                            {editingProduct?.image_url && <img src={encodeURI(editingProduct.image_url)} alt="" width={75} height={75}/>}
+                                        </Box>
                                     ) : (
-                                        <img src={`${item.image_url}`} alt={''} height='75' width='75'/>
+                                        <img src={`${encodeURI(item.image_url)}`} alt={''} height='75' width='75'/>
                                     )}
                                 </TableCell>
 

@@ -4,6 +4,7 @@ import CardCarousel from '../../Carousel/CardCarousel';
 import useEvents from '../../../utils/useEvents';
 import useCategories from '../../../utils/useCategories';
 import CategoryCards from './CategoryCards';
+import LatestProductsCarousel from '../../Carousel/LatestProductsCarousel';
 
 const HomeLanding = () => {
     const {events,eventsLoading} = useEvents()
@@ -23,6 +24,7 @@ const HomeLanding = () => {
         </StyledCard>
         {loading? <CircularProgress value={75} size={80}/> : <CategoryCards categories={categories}/> }
         <CardCarousel events={events}/>
+        <LatestProductsCarousel/>
     </Box>
 )};
 

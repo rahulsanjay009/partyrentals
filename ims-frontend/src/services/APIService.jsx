@@ -1,6 +1,6 @@
 const APIService = () => {
-  // const API_END_POINT = 'http://localhost:8000';
-  const API_END_POINT='https://backend.srikrishnapartyrentalsllc.com'
+  const API_END_POINT = 'http://localhost:8000';
+  // const API_END_POINT='https://backend.srikrishnapartyrentalsllc.com'
   const makeRequest = async (url, method, body = null, isFormData = false) => {
     const options = {
       method: method.toUpperCase(),

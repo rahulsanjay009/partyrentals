@@ -64,7 +64,7 @@ const MobileProductCatalog = ({ products = [] }) => {
           {product.image_url ? (
             <IonImg
               className="ion_img"
-              src={`${product.image_url}?f_auto,q_auto,w_400`}
+              src={`${encodeURI(product.image_url)}`}
               alt={product.name}
               style={{ width: '100%', height: '60vh', objectFit: 'contain' }}
             />

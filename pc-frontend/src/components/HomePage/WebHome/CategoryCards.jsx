@@ -77,8 +77,9 @@ const CategoryCards = ({ categories = [] }) => {
           sx={cardStyle}
         >
           <CardContent>
+            {console.log(cat.image_url)}
             <img
-              src={cat.image_url || defaultImage}
+              src={ encodeURI(cat.image_url || defaultImage) }
               alt={cat.name}
               style={imageStyle}
             />

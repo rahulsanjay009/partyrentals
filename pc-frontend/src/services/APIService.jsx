@@ -1,6 +1,6 @@
 const APIService = () => {
-    const APIENDPOINT = 'https://backend.srikrishnapartyrentalsllc.com'
-    // const APIENDPOINT = 'http://localhost:8000'
+    // const APIENDPOINT = 'https://backend.srikrishnapartyrentalsllc.com'
+    const APIENDPOINT = 'http://localhost:8000'
     const makeRequest = async (url, method = 'GET', data = null, headers = {}) => {
         try {
             const options = {
@@ -43,10 +43,16 @@ const APIService = () => {
         const url = `${APIENDPOINT}/inventory/recent_events`;
         return makeRequest(url, 'GET');
     };
+
+    const fetchLatestProducts = () => {
+        const url = `${APIENDPOINT}/inventory/latest-products`;
+        return makeRequest(url, 'GET');
+    }
     return {
         fetchCategories,
         fetchProducts,
-        fetchEvents
+        fetchEvents,
+        fetchLatestProducts
     };
 };
 
