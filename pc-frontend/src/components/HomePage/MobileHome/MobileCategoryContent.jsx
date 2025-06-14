@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import MobileProductCatalog from "../../ProductCatalog/MobileProductCatalog";
 import MobileProductSearchBar from '../../ProductSearchBar/MobileProductSearchBar';
 import useProducts from "../../../utils/useProducts";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { IonLoading } from "@ionic/react";
 
 const MobileCategoryContent = () => {
@@ -24,7 +24,7 @@ const MobileCategoryContent = () => {
             <div style={{ position: 'sticky', top: 0, zIndex: 1, backgroundColor: 'white', width: '100%' }}>
                 <MobileProductSearchBar selectSearchText={setSearchText} />
             </div>        
-            <MobileProductCatalog products={filteredProducts} />         
+            <MobileProductCatalog products={filteredProducts} relatedProducts={products} />
         </div>
     );
 };

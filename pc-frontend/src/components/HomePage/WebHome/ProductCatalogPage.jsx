@@ -19,17 +19,16 @@ const ProductCatalogPage = () => {
                 product.description?.toLowerCase().includes(searchText.toLowerCase())
         )
         : products;
-
     return (
-        <>        
+        <Box sx={{position:'relative'}}>        
         {/* { productsLoading && <div className='loader-overlay'> <div className='loader'> </div> </div>} */}
-            <Box sx={{ display: 'flex', gap: 2, p: 2, alignItems: 'center', position: 'relative' }}>
+            <Box sx={{ display: 'flex', gap: 2, p: 1, alignItems: 'center', zIndex:1, backgroundColor:'white',position: 'sticky', top:0 }}>
                 <ProductSearchBar selectSearchText={setSearchText} />
             </Box>
             <Box sx={{width: "100%", mb: 2}}>
-                <ProductCatalog products={filteredProducts} />
+                <ProductCatalog products={filteredProducts} relatedProducts={products}/>
             </Box>
-        </>
+        </Box>
     );
 };
 

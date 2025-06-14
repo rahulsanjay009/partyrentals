@@ -10,10 +10,14 @@ import {
   Box,
 } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import Badge from '@mui/material/Badge';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useSelector } from 'react-redux';
 
 const ResponsiveMenu = ({ categories }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const cartItemCount = useSelector((state) => state?.CartReducer?.products?.length || 0);
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -101,6 +105,27 @@ const ResponsiveMenu = ({ categories }) => {
             }}
           >
             About Us
+          </Button>
+          <Button onClick={() => navigate('/cart')}
+            sx={{
+              color: isActive('about') ? 'yellow' : 'white',
+              fontWeight: isActive('about') ? 'bold' : 'normal',
+            }}>
+            <Badge
+              badgeContent={cartItemCount}
+              color="error"
+              sx={{
+                "& .MuiBadge-badge": {
+                  fontSize: "0.75rem",
+                  height: "20px",
+                  minWidth: "20px",
+                  borderRadius: "50%",
+                },
+              }}
+            >
+              <ShoppingCartIcon style={{ fontSize: '28px', color:'white' }} />
+            </Badge>
+
           </Button>
         </Box>
       </Toolbar>

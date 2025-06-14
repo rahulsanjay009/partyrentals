@@ -1,12 +1,14 @@
 const APIService = () => {
-    // const APIENDPOINT = 'https://backend.srikrishnapartyrentalsllc.com'
-    const APIENDPOINT = 'http://localhost:8000'
+    const APIENDPOINT = 'https://backend.srikrishnapartyrentalsllc.com'
+    // const APIENDPOINT = 'http://localhost:8000'
+    const SECRET_API_KEY = process.env.REACT_APP_SECRET_API_KEY;
     const makeRequest = async (url, method = 'GET', data = null, headers = {}) => {
         try {
             const options = {
             method,
             headers: {
                 'Content-Type': 'application/json',
+                'x-api-key': SECRET_API_KEY,
                 ...headers,
             },
             };
@@ -48,11 +50,17 @@ const APIService = () => {
         const url = `${APIENDPOINT}/inventory/latest-products`;
         return makeRequest(url, 'GET');
     }
+
+    const fetchCartProducts = (productIds) => {
+        const url = `${APIENDPOINT}/inventory/filter_product_by_ids`;
+        return makeRequest(url, 'POST', { ids: productIds });
+    }
     return {
         fetchCategories,
         fetchProducts,
         fetchEvents,
-        fetchLatestProducts
+        fetchLatestProducts,
+        fetchCartProducts
     };
 };
 

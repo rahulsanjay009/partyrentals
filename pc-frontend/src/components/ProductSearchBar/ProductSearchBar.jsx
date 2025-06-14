@@ -11,7 +11,7 @@ const ProductSearchBar = ({selectSearchText}) => {
         selectSearchText(value); // Assuming this is another function you're calling
     };
     return(
-        <Box display={'flex'} justifyContent={'center'}  width={'100%'} position={'sticky'} top={50}>
+        <Box display={'flex'} justifyContent={'center'}  width={'100%'}>
             <Paper
                 elevation={2} 
                 style={{ display: 'flex', alignItems: 'center', padding: '4px 12px', width:'50%'}}

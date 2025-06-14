@@ -1,10 +1,14 @@
+
 const APIService = () => {
-  const API_END_POINT = 'http://localhost:8000';
-  // const API_END_POINT='https://backend.srikrishnapartyrentalsllc.com'
+  // const API_END_POINT = 'http://localhost:8000';
+  const API_END_POINT='https://backend.srikrishnapartyrentalsllc.com'
+  const SECRET_API_KEY = process.env.REACT_APP_SECRET_API_KEY;
   const makeRequest = async (url, method, body = null, isFormData = false) => {
     const options = {
       method: method.toUpperCase(),
-      headers: {},
+      headers: {
+      'x-api-key': SECRET_API_KEY,
+      },
     };
 
     if (body) {
@@ -24,7 +28,7 @@ const APIService = () => {
       const data = await response.json();
       return data;
     } catch (error) {
-      return { success: false, error: error.message };
+      return { success: false, error: error.message || error.error };
     }
   };
 

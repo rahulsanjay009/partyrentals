@@ -12,6 +12,8 @@ import {
 } from "@ionic/react";
 import './ProductCatalog.css';
 import IonIcon from "@reacticons/ionicons";
+import { useNavigate } from "react-router-dom";
+import AddRemoveProduct from "./AddRemoveProduct";
 
 const BATCH_SIZE = 8;
 
@@ -23,7 +25,7 @@ const preloadImage = (src) =>
     img.onerror = resolve;
   });
 
-const MobileProductCatalog = ({ products = [] }) => {
+const MobileProductCatalog = ({ products = [], relatedProducts = [] }) => {
   const [visibleProducts, setVisibleProducts] = useState([]);
   const [nextIndex, setNextIndex] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -36,7 +38,7 @@ const MobileProductCatalog = ({ products = [] }) => {
 
     const imageUrls = nextBatch
       .filter(p => p.image_url)
-      .map(p => `${p.image_url}?f_auto,q_auto,w_400`);
+      .map(p => `${encodeURI(p.image_url)}?f_auto,q_auto,w_400`);
 
     await Promise.all(imageUrls.map(preloadImage));
 
@@ -60,11 +62,11 @@ const MobileProductCatalog = ({ products = [] }) => {
   return (
     <>
       {visibleProducts.map((product, idx) => (
-        <IonCard className="ion_card" key={product?.id || `${product?.name}-${idx}`}>
+        <IonCard className="ion_card" key={`${product?.name}-${idx}`}>
           {product.image_url ? (
             <IonImg
               className="ion_img"
-              src={`${encodeURI(product.image_url)}`}
+              src={`${encodeURI(product.image_url)}?f_auto,q_auto,w_600`}
               alt={product.name}
               style={{ width: '100%', height: '60vh', objectFit: 'contain' }}
             />
@@ -73,30 +75,39 @@ const MobileProductCatalog = ({ products = [] }) => {
               <p style={{ color: '#999' }}>No Image</p>
             </div>
           )}
-          <IonCardHeader>
-          <IonCardTitle>{product.name}</IonCardTitle>
-            <IonCardSubtitle>{product.description}</IonCardSubtitle>
-          </IonCardHeader>
           <IonCardContent>
-            <IonRow className="price_contact">
+            <IonRow>
+              <IonText style={{fontSize:'18px', fontStyle:'bold', color:'black', marginBottom:'0.25rem'}}>{product.name}</IonText>              
+            </IonRow>
+            <IonRow>
+              <IonText style={{ fontSize: '14px', color: '#666', marginBottom:'0.25rem' }}>
+                {product?.description}
+              </IonText>  
+            </IonRow>  
+            <IonRow style={{marginBottom:'0.25rem'}}>
               <IonText>
                 {product.price == 0
                   ? "$0 - Contact for price"
                   : `$${product.price}`}
               </IonText>
+              
+            </IonRow>
+            <IonRow style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{width:'50%'}}> <AddRemoveProduct productId={product.id}/> </div>
               <a
                     href={`https://wa.me/16692688087?phone=16692688087&text=${encodeURIComponent(
-                      `Hi, I'm interested in this product:\n\n${product.name}\nCategory: ${product.category}\nPrice: ${
-                        product.price === 0 ? "Contact for price" : `$${product.price}`
-                      }\n\nImage: ${product.image_url}\n\nIs this available?`
+                      `Hi, I'm interested in this product:\n\n${product.name}\nPrice: ${
+                        product.price == 0 ? "Contact for price" : `$${product.price}`
+                      }\n\nImage: ${encodeURI(product.image_url)}?f_auto,q_auto,w_600\n\nIs this available?`
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label="WhatsApp"
+                    onClick={(e) => e.stopPropagation()}
                 >
                     <IonIcon name="logo-whatsapp" style={{ height: '30px', width: '30px', color: '#25d366' }} />
                 </a>
-            </IonRow>
+            </IonRow>          
           </IonCardContent>
         </IonCard>
       ))}

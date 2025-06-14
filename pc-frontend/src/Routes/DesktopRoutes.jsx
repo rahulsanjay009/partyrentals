@@ -4,6 +4,7 @@ import HomeLanding from '../components/HomePage/WebHome/HomeLanding';
 import AboutUs from '../components/ContactUs/AboutUs';
 import ProductCatalogPage from '../components/HomePage/WebHome/ProductCatalogPage';
 import DisplayProduct from '../components/ProductCatalog/DisplayProduct';
+import Cart from '../components/ProductCatalog/Cart';
 
 const DesktopRoutes = () => (
     <Routes>
@@ -13,6 +14,7 @@ const DesktopRoutes = () => (
             <Route path="about" element={<AboutUs />} />
             <Route path=":category" element={<ProductCatalogPage />} />
             <Route path='product' element={<DisplayProduct/>} />
+            <Route path='cart' element={<Cart/>} />
         </Route>
     </Routes>
 );

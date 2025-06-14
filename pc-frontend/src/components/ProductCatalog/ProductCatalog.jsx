@@ -7,12 +7,15 @@ import {
   CardMedia,
   CircularProgress,
   Typography,
-  Grid,
   IconButton,
+  Button,
 } from "@mui/material";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import useCategories from "../../utils/useCategories";
-import { WhatsApp } from "@mui/icons-material";
+import { AddCircleOutline, RemoveCircleOutline, WhatsApp } from "@mui/icons-material";
+import SideBar from "./SideBar";
+import { useSelector } from "react-redux";
+import AddRemoveProduct from "./AddRemoveProduct";
 
 const BATCH_SIZE = 15;
 
@@ -24,7 +27,7 @@ const preloadImage = (src) =>
     img.onerror = resolve;
   });
 
-const ProductCatalog = ({ products }) => {
+const ProductCatalog = ({ products = [], relatedProducts = [] }) => {
   const [visibleProducts, setVisibleProducts] = useState([]);
   const [nextIndex, setNextIndex] = useState(0);
   const [loadingBatch, setLoadingBatch] = useState(false);
@@ -32,8 +35,6 @@ const ProductCatalog = ({ products }) => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const currentPath = decodeURIComponent(location.pathname).slice(1); // Remove leading slash
-  const { categories, loading } = useCategories();
 
   const loadNextBatch = useCallback(async () => {
     if (nextIndex >= products.length) return;
@@ -51,7 +52,7 @@ const ProductCatalog = ({ products }) => {
 
     const imageUrls = newProducts
       .filter((p) => p.image_url)
-      .map((p) => `${p.image_url}?f_auto,q_auto,w_600`);
+      .map((p) => `${encodeURI(p.image_url)}?f_auto,q_auto,w_600`);
     await Promise.all(imageUrls.map(preloadImage));
 
     setVisibleProducts((prev) => [...prev, ...newProducts]);
@@ -64,7 +65,7 @@ const ProductCatalog = ({ products }) => {
     setNextIndex(0);
     productIds.current.clear();
   }, [products]);
-
+ 
   useEffect(() => {
     if (!loadingBatch && nextIndex < products.length) {
       loadNextBatch();
@@ -73,67 +74,8 @@ const ProductCatalog = ({ products }) => {
 
   return (
     <Box display="flex">
-      {/* Sidebar */}
-      <Box
-        sx={{
-          width: 'auto',
-          backgroundColor: "#f8f8f8",
-          borderRadius: 2,
-          boxShadow: 2,
-          m:1,
-          p:1,
-          position: 'sticky',
-          height:'80vh',
-          top:50,
-        }}
-      >
-        <Typography variant="body1" padding={1}>
-          Browse by
-        </Typography>
-        <Box sx={{
-          width: 'auto',
-          height:'75vh',
-          overflowY: "auto",
-          overflowX:'hidden',
-          "&::-webkit-scrollbar": {
-            width: "2px", // set desired width
-          },
-          "&::-webkit-scrollbar-thumb": {
-            backgroundColor: "#c1c1c1", // thumb color
-            borderRadius: "4px",
-          },
-          "&::-webkit-scrollbar-track": {
-            backgroundColor: "#f1f1f1", // track color
-          },
-        }}>
-        {[{name:'ALL'},...categories].map((cat) => {
-          const isSelected = cat.name.toLowerCase() === currentPath.toLowerCase();
-          return (
-            <Box
-              key={cat.name}
-              sx={{
-                m:1,
-                px:1,
-                borderRadius: 1,
-                cursor: "pointer",
-                color: isSelected ? "success.dark" : "#253529",
-                fontWeight:isSelected?'bold':'400',
-                transition: "0.2s",
-                "&:hover": {
-                  color: "success.dark",
-                },
-                fontSize:'14px',
-                minWidth:'200px'
-              }}
-              onClick={() => navigate(`/${encodeURIComponent(cat.name)}`)}
-            >
-              {cat.name}
-            </Box>
-          );
-        })}
-        </Box>
-      </Box>
-
+      
+      <SideBar />
       {/* Product Grid */}
       <Box
         sx={{
@@ -158,32 +100,39 @@ const ProductCatalog = ({ products }) => {
         }}
       >
           {visibleProducts.map((product) => (
-            <Box
-              key={product.id}
-              sx={{
-                width: 275, // fixed width
-                flex: '0 0 auto', // prevent stretching
-              }}
-            >
+            <Box key={product.id} sx={{ width: 275, flex: '0 0 auto' }}>
               <Card
                 sx={{
                   height: "100%",
                   borderRadius: 3,
                   boxShadow: 3,
-                  background: "linear-gradient(to bottom, #ffffff, #f9f9f9)"
+                  background: "linear-gradient(to bottom, #ffffff, #f9f9f9)",
+                  display: "flex",
+                  flexDirection: "column",
                 }}
               >
+                <CardActionArea
+                  onClick={() => {
+                    navigate(`/product`, {
+                      state: {
+                        product,
+                        relatedProducts: relatedProducts,
+                      },
+                    });
+                  }}
+                  disableRipple
+                  sx={{ height: "100%", display: "flex", flexDirection: "column", alignItems: "stretch" }}
+                >
                   {product.image_url ? (
                     <Box sx={{ overflow: "hidden", height: 250 }}>
                       <CardMedia
-                      
                         component="img"
                         loading="lazy"
-                        image={`${encodeURI(product.image_url)}`}
+                        image={`${encodeURI(product.image_url)}?f_auto,q_auto,w_600`}
                         alt={product.name}
-                        sx={{   
-                          height:250,
-                          width:300,              
+                        sx={{
+                          height: 250,
+                          width: "100%",
                           objectFit: "contain",
                           transition: "transform 0.3s",
                           "&:hover": {
@@ -205,36 +154,51 @@ const ProductCatalog = ({ products }) => {
                       <Typography color="#999">No Image</Typography>
                     </Box>
                   )}
-                  <CardContent>
+                  <CardContent sx={{ width: "100%" }}>
                     <Typography variant="h6" sx={{ textWrap: "wrap", wordBreak: "break-word" }}>
                       {product.name}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
+                    {/* <Typography variant="body2" color="text.secondary">
                       {product.description}
+                    </Typography> */}
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexWrap: "wrap",
+                        gap: 1,
+                        my: 1,
+                      }}>
+                        {product?.categories.map((category) => (
+                          <Box boxShadow={1} borderRadius={3} fontSize={10} bgcolor="#EEEEEE" p={0.5} key={category.id}>
+                            {category.name}
+                          </Box>
+                        ))}
+                      </Box>
+                  
+                    <Typography variant="subtitle4">
+                      {product.price == 0 ? "$Contact for price" : `$${product.price}`}
                     </Typography>
-                    <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
-                      <Typography variant="subtitle1" >
-                        {product.price == 0
-                          ? "$Contact for price"
-                          : `$${product.price}`}
-                      </Typography>
-                      <IconButton
-                        component="a"
-                        href={`https://wa.me/16692688087?text=${encodeURIComponent(
-                          `Hi, I'm interested in this product:\n\n${product.name}\nCategory: ${product.category}\nPrice: ${
-                            product.price === 0 ? "Contact for price" : `$${product.price}`
-                          }\n\nImage: ${product.image_url}\n\nIs this available?`
-                        )}`}
-                        target="_blank"
-                        color="inherit"
-                      >
-                        <WhatsApp />
-                      </IconButton>
+                    <Box display={"flex"} justifyContent={"space-between"} mt={1}>                      
+                        <Box width='50%'><AddRemoveProduct productId={product.id}/></Box>
+                        <IconButton
+                          component="a"
+                          href={`https://wa.me/16692688087?text=${encodeURIComponent(
+                            `Hi, I'm interested in this product:\n\n${product.name}\nPrice: ${
+                              product.price == 0 ? "Contact for price" : `$${product.price}`
+                            }\n\nImage: ${encodeURI(product.image_url)}?f_auto,q_auto,w_600\n\nIs this available?`
+                          )}`}
+                          target="_blank"
+                          color="inherit"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <WhatsApp />
+                        </IconButton>
                     </Box>
-                    
                   </CardContent>
+                </CardActionArea>
               </Card>
             </Box>
+
           ))}   
           {loadingBatch && (
             <Box component={'div'} width={'350px'} alignSelf={'center'} textAlign={'center'}>

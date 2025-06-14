@@ -63,7 +63,7 @@ const LatestProductsCarousel = () => {
                 borderRadius: 3,
                 overflow: "hidden",
                 boxShadow: 4,
-                backgroundImage: `url(${encodeURI(product.image_url)})`,
+                backgroundImage: `url("${encodeURI(product.image_url)}")`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 position: "relative",

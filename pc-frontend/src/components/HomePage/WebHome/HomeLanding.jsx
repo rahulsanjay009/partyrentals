@@ -22,7 +22,7 @@ const HomeLanding = () => {
                 </Typography>
             </CardContent>
         </StyledCard>
-        {loading? <CircularProgress value={75} size={80}/> : <CategoryCards categories={categories}/> }
+        {loading? <CircularProgress value={75} size={80} color={'success'}/> : <CategoryCards categories={categories}/> }
         <CardCarousel events={events}/>
         <LatestProductsCarousel/>
     </Box>

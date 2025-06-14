@@ -3,12 +3,24 @@ import Slider from "react-slick";
 import { Box, Typography, CircularProgress } from "@mui/material";
 import APIService from "../../services/APIService";
 import { IonItem, IonLabel, IonTitle } from "@ionic/react";
+import { useNavigate } from "react-router-dom";
 
-const MobileLatestProductsCarousel = () => {
+const MobileLatestProductsCarousel = ({productsData = []}) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const navigate = useNavigate()
+  
+  const getRandomItems = (products) => {
+    if (!products || products.length <= 10) return products || [];
+    return [...products].sort(() => 0.5 - Math.random()).slice(0, 10);
+  };
   useEffect(() => {
+    // console.log("productsData", productsData);
+    if (Array.isArray(productsData) && productsData.length > 0) {
+      setProducts(getRandomItems(productsData));
+      setLoading(false);
+      return;
+    } 
     APIService().fetchLatestProducts()
       .then((res) => {
         if(res?.success)
@@ -19,7 +31,7 @@ const MobileLatestProductsCarousel = () => {
         console.error("Failed to fetch latest products", err);
         setLoading(false);
       });
-  }, []);
+  }, [productsData]);
 
   const settings = {
     dots: true,
@@ -54,19 +66,21 @@ const MobileLatestProductsCarousel = () => {
   return (
     <>
     <IonItem>
-      <IonLabel style={{textAlign:'center'}}> Newly Launched</IonLabel>
+      <IonLabel style={{textAlign:'center'}}> 
+        {Array.isArray(productsData) && productsData.length > 0 ? 'Related Products' : 'Newly Launched'}
+      </IonLabel>
     </IonItem>
-    <Box sx={{ maxWidth:'100%', p:1, m:1 }}>
+    <Box sx={{ maxWidth:'100%', mt:1}} >
       <Slider {...settings}>
         {products.map((product) => (
-          <Box key={product.id} px={1}>
+          <Box key={product.id} px={1} onClick={() => productsData != null && navigate('/product',{ state: {product, relatedProducts: products} })}>
             <Box
               sx={{
                 height: 325,
                 borderRadius: 3,
                 overflow: "hidden",
                 boxShadow: 4,
-                backgroundImage: `url(${encodeURI(product.image_url)})`,
+                backgroundImage: `url("${encodeURI(product.image_url)}")`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 position: "relative",

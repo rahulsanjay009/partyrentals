@@ -95,7 +95,7 @@ const RecentEventsConsole = () => {
             value={formData.event_name}
             onChange={(e) => setFormData({ ...formData, event_name: e.target.value })}
           />
-          <TextField
+          <textarea rows = {4} cols={50}
             label="Description"
             value={formData.event_description}
             onChange={(e) => setFormData({ ...formData, event_description: e.target.value })}
@@ -134,7 +134,7 @@ const RecentEventsConsole = () => {
                 </TableCell>
                 <TableCell>
                   {editingEvent?.id === event?.id ? (
-                    <TextField
+                    <textarea rows={4} cols={50}
                       value={editingEvent?.event_description}
                       onChange={(e) => setEditingEvent({ ...editingEvent, event_description: e.target.value })}
                     />

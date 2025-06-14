@@ -16,12 +16,13 @@
     --background: #2e7d32;
     --color:white;
 }
-.ion_title{
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    gap:10px;
-    text-wrap: wrap;
+.ion_title {
+  display: flex;
+  align-items: center;       /* Vertically center items inside */
+  gap: 10px;
+  flex-wrap: wrap;           /* Allow wrapping if content overflows */
+  text-align: center;
+  margin-left: 0;            /* Remove fixed margin that breaks centering */
 }
   .price_contact{
     display: flex;
