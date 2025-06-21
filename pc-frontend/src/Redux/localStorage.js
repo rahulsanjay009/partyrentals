@@ -1,6 +1,6 @@
 import CryptoJS from 'crypto-js';
-
-const SECRET_KEY = process.env.REACT_APP_HASH_KEY || 'default';
+//process.env.REACT_APP_HASH_KEY ||
+const SECRET_KEY =  'default';
 
 export const saveState = (state) => {
   try {

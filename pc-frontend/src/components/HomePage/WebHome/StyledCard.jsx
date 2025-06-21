@@ -1,5 +1,5 @@
 import { Card } from '@mui/material';
-import { styled } from '@mui/system';
+import { styled } from '@mui/material';
 
 const StyledCard = styled(Card)(({ theme }) => ({
   position: 'relative',

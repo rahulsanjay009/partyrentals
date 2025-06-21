@@ -61,8 +61,7 @@ const ResponsiveMenu = ({ categories }) => {
             <Typography variant="body2">Party Rentals LLC</Typography>
           </Box>
           </a>
-          &nbsp; &nbsp;
-          <Typography variant="body2">
+          <Typography variant="body2" pl={2}>
             2619 Cordeila Ln, Tracy, CA 95377
           </Typography>
         </Box>
