@@ -1,7 +1,7 @@
 {
   "name": "Party Rentals IMS",
   "short_name": "PartyIMS",
-  "start_url": "/",
+  "start_url": "/projects/myportfolio/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#007bff"
